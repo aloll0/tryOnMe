@@ -93,6 +93,18 @@
   color: #d4af37;
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.logo img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
 @media (max-width: 768px) {
   .card {
     width: 100%;

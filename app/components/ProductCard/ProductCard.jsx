@@ -10,6 +10,10 @@ export default function ProductCard() {
 
   return (
     <>
+    <div className={styles.theme}>
+      <div className={styles.logo}>
+        <Image src="/tryonme.png" alt="Try On Me" width={100} height={100} />
+      </div>
       <div className={styles.card}>
         <div className={styles.imageWrap}>
           <Image
@@ -31,6 +35,7 @@ export default function ProductCard() {
       </div>
 
       <TryOnModal open={open} setOpen={setOpen} />
+    </div>
     </>
   );
 }
