@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(password, 12); 
 
-    const result = await supabase
+    const { data } = await supabase
       .from("users")
       .insert({
         name: name.trim(),
@@ -87,12 +87,14 @@ export async function POST(req: NextRequest) {
         gender: gender || null,
         createdAt: new Date(),
         updatedAt: new Date(),
-      });
+      })
+      .select()
+      .single();
 
     return NextResponse.json(
       {
         message: "Account created successfully",
-        userId: result.data?.id.toString(),
+        userId: data?.id.toString(),
       },
       { status: 201 },
     );
