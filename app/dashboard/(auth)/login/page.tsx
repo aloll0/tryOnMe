@@ -5,7 +5,7 @@ import style from "../login/page.module.css";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../../lib/lib/supabase";
+import { getSupabaseClient } from "../../../lib/lib/supabase";
 
 export default function Login() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await getSupabaseClient().auth.signInWithPassword({
       email,
       password,
     });

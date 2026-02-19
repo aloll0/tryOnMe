@@ -5,7 +5,7 @@ import style from "./page.module.css";
 import Link from "next/link";
 import PhoneInput from "react-phone-number-input";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../../lib/lib/supabase";
+import { getSupabaseClient } from "../../../lib/lib/supabase";
 
 export default function Register() {
   const [gender, setGender] = useState("");
@@ -31,7 +31,7 @@ const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
 
   try {
     startTransition(async () => {
-    const { error } = await supabase.auth.signUp({
+    const { error } = await getSupabaseClient().auth.signUp({
       email,
       password,
       options: {
