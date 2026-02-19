@@ -1,41 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { SquareDashedMousePointer } from "lucide-react";
 import TryOnModal from "../TryOnModal/TryOnModal";
 import styles from "./ProductCard.module.css";
-import Image from "next/image";
 
 export default function ProductCard() {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
-    <div className={styles.theme}>
-      <div className={styles.logo}>
-        <Image src="/tryonme.png" alt="Try On Me" width={100} height={100} />
+    <div
+      className={`p-10 w-full max-w-7xl mx-auto space-y-10 ${styles.container}`}
+    >
+      {/* Header */}
+      <div className={styles.header_fixed}>
+        <div className="flex flex-col justify-between bg-black/50 p-4">
+          <h1 className="text-3xl font-semibold tracking-tight">TRY ON ME</h1>
+        </div>
       </div>
-      <div className={styles.card}>
-        <div className={styles.imageWrap}>
-          <Image
-            src="/placeholder.png"
-            alt="Oversized Hoodie"
-            fill
-            className={styles.image}
+
+      {/* Upload Area */}
+      <div
+        className={`complate flex justify-center items-center ${styles.upload_area}`}
+      >
+        <div
+          onClick={() => setOpen(true)}
+          className={styles.upload_area_label}
+        >
+          <SquareDashedMousePointer
+            size={40}
+            className="mb-3 opacity-70 group-hover:scale-110 transition"
           />
 
-          <button onClick={() => setOpen(true)} className={styles.tryOnOverlay}>
-            Try On
-          </button>
+          <p className="text-gray-300 font-medium">Click here to Try On</p>
         </div>
 
-        <div className={styles.info}>
-          <h3>Oversized Hoodie</h3>
-          <span>799 EGP</span>
-        </div>
+        {/* المودال */}
+        <TryOnModal open={open} setOpen={setOpen} />
       </div>
-
-      <TryOnModal open={open} setOpen={setOpen} />
     </div>
-    </>
   );
 }

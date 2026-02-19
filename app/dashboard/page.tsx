@@ -1,8 +1,13 @@
-import ProductCard from "../components/ProductCard/ProductCard"; 
+"use client";
+import Sidebar from "../components/Sidebar"
+
 
 const page = () => {
-  return <div className="min-h-screen flex items-center justify-center bg-white"><ProductCard /></div>;
-};
+  return (
+    <div>
+      <Sidebar />
+    </div>
+  )
+}
 
-export default page;
-  
+export default page

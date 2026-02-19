@@ -113,7 +113,7 @@
 
     .uploadZone:hover,
     .uploadZone.dragging {
-      border-color: #d4af37;
+      border-color: var(--color-secondary);
       background: rgba(212, 175, 55, 0.05);
       transform: translateY(-2px);
     }
@@ -170,7 +170,7 @@
       border-radius: 8px;
       font-size: 12px;
       font-weight: 600;
-      color: #d4af37;
+      color: var(--color-secondary);
       z-index: 1;
     }
 
@@ -201,7 +201,7 @@
       width: 60px;
       height: 60px;
       border: 3px solid rgba(212, 175, 55, 0.2);
-      border-top-color: #d4af37;
+      border-top-color: var(--color-secondary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 16px;
@@ -213,7 +213,7 @@
 
     .loadingText {
       font-size: 14px;
-      color: #d4af37;
+      color: var(--color-secondary);
       margin-bottom: 16px;
       font-weight: 600;
     }
@@ -230,7 +230,7 @@
 
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #d4af37, #f4d03f);
+      background: linear-gradient(90deg, var(--color-secondary), #f4d03f);
       width: 0%;
       transition: width 0.3s ease;
     }
@@ -253,7 +253,7 @@
     }
 
     .step.active {
-      color: #d4af37;
+      color: var(--color-secondary);
       background: rgba(212, 175, 55, 0.1);
     }
 
@@ -287,9 +287,9 @@
     .retryBtn {
       padding: 10px 24px;
       background: rgba(212, 175, 55, 0.2);
-      border: 1px solid #d4af37;
+      border: 1px solid var(--color-secondary);
       border-radius: 8px;
-      color: #d4af37;
+      color: var(--color-secondary);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -328,12 +328,12 @@
     }
 
     .actionBtn.primary {
-      background: #d4af37;
+      background: var(--color-secondary);
       color: #000;
     }
 
     .actionBtn.primary:hover {
-      background: #f4d03f;
+      background: var(--color-secondary);
       transform: translateY(-2px);
     }
 
@@ -378,7 +378,7 @@
     }
 
     .dragging {
-      border-color: #d4af37 !important;
+      border-color: var(--color-secondary) !important;
       background: rgba(212, 175, 55, 0.1) !important;
     }
   .placeholder {

@@ -1,0 +1,23 @@
+.sidebar {
+  background-color: var(--secondary-color);
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  color: white;
+}
+.sidebar_logo {
+  border-radius: 50%;
+}
+
+.hovering {
+  transition: all 0.3s ease;
+}
+.hovering:hover {
+  background-color: white;
+  color: black;
+}
+.hovering span:hover {
+  color: black;
+}
+.transtion {
+  transition: all 0.3s ease;
+}

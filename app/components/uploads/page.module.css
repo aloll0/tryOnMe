@@ -1,0 +1,87 @@
+.header_fixed {
+  background: #fff;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 25px;
+  display: flex;
+  box-shadow: 2px 0 10px #0000000d;
+}
+.container {
+  background: #f4f6f8;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  overflow: hidden;
+}
+.griding {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem; 
+}
+@media (min-width: 640px) {
+  .griding {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .griding {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.grid_item {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.grid_item img {
+  aspect-ratio: 1 / 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.upload_area {
+  width: 100%;
+  height: 100%;
+  margin: 20px 30px;
+  gap: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload_area label {
+  cursor: pointer;
+  border: 4px dashed #ccc;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.delete_button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: end;
+  border-radius: 1rem;
+  padding-top: 1rem;
+  gap: 1rem;
+}
+
+
+.delete_button button {
+  background-color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: #333;
+}

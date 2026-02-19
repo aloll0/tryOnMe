@@ -17,14 +17,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} antialiased`}>{children}
-      </body>
+      <body className={`${outfit.variable} antialiased  flex flex-col min-h-screen   ` }   >{children}</body>
     </html>
   );
 }
-    
