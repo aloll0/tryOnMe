@@ -1,24 +1,16 @@
+// pages/api/auth/login.ts
 import { NextRequest, NextResponse } from "next/server";
-// import clientPromise from "../../../lib/mongodb";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabase } from "../../../lib/lib/supabase";
-// Define type for login request
-type LoginRequestBody = {
-  email: string;
-  password: string;
-};
+import { getSupabaseClient } from "../../../lib/lib/supabase";
 
-// JWT secret (should be in environment variables)
-const JWT_SECRET =
-  process.env.JWT_SECRET || "your-secret-key-change-this-in-production";
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-this";
 
 export async function POST(req: NextRequest) {
   try {
-    const body: LoginRequestBody = await req.json();
+    const body = await req.json();
     const { email, password } = body;
 
-    // Validate input
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -26,14 +18,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // const client = await clientPromise;
+    const supabase = getSupabaseClient();
 
-    // Find user
-    const user = await supabase
+    const { data: user } = await supabase
       .from("users")
       .select("*")
       .eq("email", email)
       .single();
+
     if (!user) {
       return NextResponse.json(
         { message: "Invalid email or password" },
@@ -41,8 +33,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Compare password
-    const isMatch = await bcrypt.compare(password, user.data.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
         { message: "Invalid email or password" },
@@ -50,43 +41,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Generate JWT token
     const token = jwt.sign(
-      {
-        userId: user.data.id.toString(),
-        email: user.data.email,
-        name: user.data.name,
-      },
+      { userId: user.id.toString(), email: user.email, name: user.name },
       JWT_SECRET,
-      { expiresIn: "7d" }, // Token expires in 7 days
+      { expiresIn: "7d" },
     );
 
-    // Create response
     const response = NextResponse.json({
       message: "Login successful",
       token,
       user: {
-        id: user.data.id.toString(),
-        name: user.data.name,
-        email: user.data.email,
-        phone: user.data.phone,
-        gender: user.data.gender,
+        id: user.id.toString(),
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        gender: user.gender,
       },
     });
 
-    // Set HTTP-only cookie for better security (optional, alongside token)
     response.cookies.set("authToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
 
     return response;
   } catch (error: unknown) {
-    console.error("Login error:", error);
-
+    console.error("LOGIN ERROR:", error);
     return NextResponse.json(
       {
         message: "Server error",

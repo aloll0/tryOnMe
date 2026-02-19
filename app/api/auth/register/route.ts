@@ -1,9 +1,7 @@
+// pages/api/auth/register.ts
 import { NextRequest, NextResponse } from "next/server";
-// import clientPromise from "../../../lib/mongodb";
 import bcrypt from "bcryptjs";
-import { supabase } from "../../../lib/lib/supabase";
-
-export const runtime = "nodejs";
+import { getSupabaseClient } from "../../../lib/lib/supabase";
 
 type RegisterRequestBody = {
   name: string;
@@ -41,16 +39,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (password.length < 8) {
+    if (password.length < 8 || password.length > 50) {
       return NextResponse.json(
-        { message: "Password must be at least 8 characters long" },
-        { status: 400 },
-      );
-    }
-
-    if (password.length > 50) {
-      return NextResponse.json(
-        { message: "Password must not exceed 50 characters" },
+        { message: "Password must be between 8 and 50 characters" },
         { status: 400 },
       );
     }
@@ -62,7 +53,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existingUser = await supabase
+    const supabase = getSupabaseClient();
+
+    const { data: existingUser } = await supabase
       .from("users")
       .select("*")
       .eq("email", email)
@@ -75,7 +68,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12); 
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const { data } = await supabase
       .from("users")
@@ -92,25 +85,15 @@ export async function POST(req: NextRequest) {
       .single();
 
     return NextResponse.json(
-      {
-        message: "Account created successfully",
-        userId: data?.id.toString(),
-      },
+      { message: "Account created successfully", userId: data?.id.toString() },
       { status: 201 },
     );
   } catch (error: unknown) {
     console.error("REGISTER ERROR:", error);
-
-    const isDevelopment = process.env.NODE_ENV === "development";
-
     return NextResponse.json(
       {
-        message:
-          "An error occurred while creating your account. Please try again.",
-        ...(isDevelopment && {
-          error: error instanceof Error ? error.message : "Unknown error",
-          stack: error instanceof Error ? error.stack : undefined,
-        }),
+        message: "Server error",
+        error: error instanceof Error ? error.message : undefined,
       },
       { status: 500 },
     );
